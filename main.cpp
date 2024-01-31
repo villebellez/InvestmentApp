@@ -28,6 +28,38 @@ void displayScreen() {
 	cout << endl;
 }
 
+void inputDouble(double& x, string prompt) {
+	while (true) {
+		cout << prompt;
+		cin >> x;
+
+		if (!cin.fail()) {
+			break;
+		}
+		else {
+			cout << "(Invalid input. Please enter an integer or a double.)" << endl;
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
+	}
+}
+
+void inputInt(int& x, string prompt) {
+	while (true) {
+		cout << prompt;
+		cin >> x;
+
+		if (!cin.fail()) {
+			break;
+		}
+		else {
+			cout << "(Invalid input. Please enter an integer.)" << endl;
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
+	}
+}
+
 Input inputScreen() {
 	double deposit;
 	double monthly;
@@ -39,17 +71,10 @@ Input inputScreen() {
 	cout << "* * * * * * * DATA INPUT * * * * * * *" << endl;
 	cout << setfill('*') << setw(38) << "" << endl;
 
-	cout << "Initial Investment Amount: $";
-	cin >> deposit;
-
-	cout << "Monthly Deposit: $";
-	cin >> monthly;
-
-	cout << "Annual Interest: %";
-	cin >> rate;
-
-	cout << "Number of years: ";
-	cin >> years;
+	inputDouble(deposit, "Initial Investment Amount: $");
+	inputDouble(monthly, "Monthly Deposit: $");
+	inputDouble(rate, "Annual Interest: %");
+	inputInt(years, "Number of years: ");
 
 	i.deposit = deposit;
 	i.monthly = monthly;
@@ -60,11 +85,11 @@ Input inputScreen() {
 }
 
 int main() {
-	string loop = "y";
+	char loop = 'y';
 
 	displayScreen();
 
-	while (loop == "y") {
+	while (loop == 'y') {
 		system("pause");
 
 		system("cls");
@@ -73,14 +98,22 @@ int main() {
 
 		auto account = Investments(i.deposit, i.monthly, i.rate, i.years);
 
-		account.yesMonthlyDeposit();
 		account.noMonthlyDeposit();
+		account.yesMonthlyDeposit();
 
-		cout << endl << "Would you like to enter different values? (y/n): ";
-		cin >> loop;
+		do {
+			cout << endl << "Would you like to enter different values? (y/n): ";
+			cin >> loop;
+			loop = tolower(loop);
 
-		// TODO: Error catching for anything other than y/n
-		if (loop != "y") {
+			if (loop == 'y' || loop == 'n') {
+				break;}
+			else {
+				cout << "Invalid input. Please enter 'y' or 'n'." << endl; }
+		} 
+		while (true);
+
+		if (loop != 'y') {
 			break;
 		}
 	}
