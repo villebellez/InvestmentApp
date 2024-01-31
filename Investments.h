@@ -1,15 +1,17 @@
-#ifndef INVESTMENTS_H_
+#ifndef INVESTMENTS_H_ 
 #define INVESTMENTS_H_
 
 class Investments {
 	public:
-		Investments(double deposit, double monthly, double rate, int numYears);
+		Investments(double deposit, double monthly, double rate, int years);
 		~Investments();
-		void yesMonthlyDeposit();
-		void noMonthlyDeposit();
+		void yesMonthlyDeposit() const;
+		void noMonthlyDeposit() const;
 
 	private:
-		double initialDeposit, monthlyDeposit, compoundInterest;
+		double initialDeposit;
+		double monthlyDeposit;
+		double compoundInterest;
 		int numYears;
 };
 
