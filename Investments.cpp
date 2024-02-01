@@ -4,14 +4,18 @@
 using namespace std;
 
 // Default constructor to create objects
-Investments::Investments(double deposit, double monthly, double rate, int years): 
+Investments::Investments(double deposit, double monthly, double rate, int years):
 	initialDeposit(deposit), monthlyDeposit(monthly), compoundInterest(rate), numYears(years) {
 }
 
 // Destructor to destroy objects
 Investments::~Investments() = default;
 
-// Prints report that ignores the user-entered monthly deposit.
+/**
+ * Calculates interest earned during the specified time period, ignoring user-entered monthly deposit.
+ * Prints report.
+ *
+ */
 void Investments::noMonthlyDeposit() const {
 	int year = 1;
 	double yearEnd = initialDeposit;
@@ -22,6 +26,7 @@ void Investments::noMonthlyDeposit() const {
 	cout << "Year" << setfill(' ') << setw(30) << "Year End Balance" << setw(40) << "Year End Earned Interest" << endl;
 	cout << setfill('-') << setw(74) << "" << endl;
 
+	// Loops through each year, adding interest earned to the year end balance, then prints results.
 	while (year <= numYears) {
 		double interestEarned = yearEnd * compoundInterest / 100;
 		yearEnd += interestEarned;
@@ -33,7 +38,11 @@ void Investments::noMonthlyDeposit() const {
 	cout << endl;
 }
 
-// Prints report that considers the user-entered monthly deposit.
+/**
+ * Calculates interest earned during the specified time period, including user-entered monthly deposit.
+ * Prints report.
+ *
+ */
 void Investments::yesMonthlyDeposit() const {
 	int year = 1;
 	double yearEnd = initialDeposit;
@@ -44,12 +53,13 @@ void Investments::yesMonthlyDeposit() const {
 	cout << "Year" << setfill(' ') << setw(30) << "Year End Balance" << setw(40) << "Year End Earned Interest" << endl;
 	cout << setfill('-') << setw(74) << "" << endl;
 
-
+	// Loops through each year, adding interest earned to the year end balance, then prints results.
 	while (year <= numYears) {
 		int month = 1;
 		double interestEarned = 0.0;
 		double monthEnd = yearEnd;
 
+		// Loops through each month of each year of its outside loop, adding the accumulation of interest at the end of every month.
 		while (month <= 12) {
 			monthEnd += monthlyDeposit;
 			double monthlyRate = monthEnd * compoundInterest / (100 * 12);
