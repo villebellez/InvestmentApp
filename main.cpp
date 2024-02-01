@@ -10,6 +10,7 @@
 #include "Investments.h"
 using namespace std;
 
+// Structure that groups the Input-related variables together in order to pass through the inputScreen function.
 struct Input {
 	double deposit;
 	double monthly;
@@ -17,6 +18,7 @@ struct Input {
 	int years;
 };
 
+// Outputs the blank display screen.
 void displayScreen() {
 	cout << setfill('*') << setw(38) << "" << endl;
 	cout << "* * * * * * * DATA INPUT * * * * * * *" << endl;
@@ -28,6 +30,12 @@ void displayScreen() {
 	cout << endl;
 }
 
+/**
+ * Asks user to enter either an integer or a double with a prompt that is passed through the function.
+ * Verifies that the user input is valid.
+ *
+ * @param x, prompt
+ */
 void inputDouble(double& x, string prompt) {
 	while (true) {
 		cout << prompt;
@@ -44,6 +52,12 @@ void inputDouble(double& x, string prompt) {
 	}
 }
 
+/**
+ * Asks user to enter an integer with a prompt that is passed through the function.
+ * Verifies that the user input is valid.
+ *
+ * @param x, prompt
+ */
 void inputInt(int& x, string prompt) {
 	while (true) {
 		cout << prompt;
@@ -60,6 +74,12 @@ void inputInt(int& x, string prompt) {
 	}
 }
 
+
+/**
+ * Gets user-input variables to be used for calculations.
+ *
+ * @return structure of deposit, monthly, rate, years
+ */
 Input inputScreen() {
 	double deposit;
 	double monthly;
@@ -89,6 +109,7 @@ int main() {
 
 	displayScreen();
 
+	// Loops program until user specifies they do not wish to input different variables.
 	while (loop == 'y') {
 		system("pause");
 
@@ -96,11 +117,12 @@ int main() {
 		Input i = inputScreen();
 		system("pause");
 
+		// Allows user to input initial amounts and get a print out of all calculations with those variables.
 		auto account = Investments(i.deposit, i.monthly, i.rate, i.years);
-
 		account.noMonthlyDeposit();
 		account.yesMonthlyDeposit();
 
+		// Verifies user-entered answer to repeat the program is either 'y' or 'no', otherwise throws error.
 		do {
 			cout << endl << "Would you like to enter different values? (y/n): ";
 			cin >> loop;
