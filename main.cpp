@@ -25,7 +25,6 @@ void displayScreen() {
 }
 
 int main() {
-	Input i;
 	char loop = 'y';
 
 	displayScreen();
@@ -33,8 +32,9 @@ int main() {
 	// Loops program until user specifies they do not wish to input different variables.
 	while (loop == 'y') {
 		system("pause");
-
 		system("cls");
+
+		auto i = Input();
 		i.inputScreen();
 		double deposit = i.getDeposit();
 		double monthly = i.getMonthly();

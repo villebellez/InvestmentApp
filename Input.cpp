@@ -2,8 +2,8 @@
 
 /** Constructor
 */
-Input::Input(double d, double m, double r, int y):
-    deposit(d), monthly(m), rate(r), years(y) {
+Input::Input(double t_initialDeposit, double t_monthlyDeposit, double t_compoundInterest, int t_numYears):
+    m_deposit(t_initialDeposit), m_monthly(t_monthlyDeposit), m_rate(t_compoundInterest), m_years(t_numYears) {
 }
 
 /** Destructor
@@ -62,10 +62,10 @@ void Input::inputScreen() {
     cout << "* * * * * * * DATA INPUT * * * * * * *" << endl;
     cout << setfill('*') << setw(38) << "" << endl;
 
-    inputDouble(deposit, "Initial Investment Amount: $");
-    inputDouble(monthly, "Monthly Deposit: $");
-    inputDouble(rate, "Annual Interest: %");
-    inputInt(years, "Number of years: ");
+    inputDouble(m_deposit, "Initial Investment Amount: $");
+    inputDouble(m_monthly, "Monthly Deposit: $");
+    inputDouble(m_rate, "Annual Interest: %");
+    inputInt(m_years, "Number of years: ");
 }
 
 /**
@@ -74,14 +74,14 @@ void Input::inputScreen() {
  * @return deposit, monthly, rate, years
  */
 double Input::getDeposit() const {
-    return deposit;
+    return m_deposit;
 }
 double Input::getMonthly() const {
-    return monthly;
+    return m_monthly;
 }
 double Input::getRate() const {
-    return rate;
+    return m_rate;
 }
 int Input::getYears() const {
-    return years;
+    return m_years;
 }

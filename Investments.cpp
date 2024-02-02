@@ -5,8 +5,8 @@ using namespace std;
 
 /** Constructor
 */
-Investments::Investments(double deposit, double monthly, double rate, int years):
-	initialDeposit(deposit), monthlyDeposit(monthly), compoundInterest(rate), numYears(years) {
+Investments::Investments(double t_initialDeposit, double t_monthlyDeposit, double t_compoundInterest, int t_numYears):
+	m_deposit(t_initialDeposit), m_monthly(t_monthlyDeposit), m_rate(t_compoundInterest), m_years(t_numYears) {
 }
 
 /** Destructor
@@ -19,7 +19,7 @@ Investments::~Investments() = default;
  */
 void Investments::noMonthlyDeposit() const {
 	int year = 1;
-	double yearEnd = initialDeposit;
+	double yearEnd = m_deposit;
 
 	// Header output.
 	cout << endl;
@@ -29,8 +29,8 @@ void Investments::noMonthlyDeposit() const {
 	cout << setfill('-') << setw(74) << "" << endl;
 
 	// Loops through each year, adding interest earned to the year end balance, then prints results.
-	while (year <= numYears) {
-		double interestEarned = yearEnd * compoundInterest / 100;
+	while (year <= m_years) {
+		double interestEarned = yearEnd * m_rate / 100;
 		yearEnd += interestEarned;
 
 		// Balance output.
@@ -47,7 +47,7 @@ void Investments::noMonthlyDeposit() const {
  */
 void Investments::yesMonthlyDeposit() const {
 	int year = 1;
-	double yearEnd = initialDeposit;
+	double yearEnd = m_deposit;
 
 	// Header output.
 	cout << endl;
@@ -57,15 +57,15 @@ void Investments::yesMonthlyDeposit() const {
 	cout << setfill('-') << setw(74) << "" << endl;
 
 	// Loops through each year, adding interest earned to the year end balance, then prints results.
-	while (year <= numYears) {
+	while (year <= m_years) {
 		int month = 1;
 		double interestEarned = 0.0;
 		double monthEnd = yearEnd;
 
 		// Loops through each month of each year of its outside loop, adding the accumulation of interest at the end of every month.
 		while (month <= 12) {
-			monthEnd += monthlyDeposit;
-			double monthlyRate = monthEnd * compoundInterest / (100 * 12);
+			monthEnd += m_monthly;
+			double monthlyRate = monthEnd * m_rate / (100 * 12);
 
 			interestEarned += monthlyRate;
 			monthEnd += monthlyRate;
