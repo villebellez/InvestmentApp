@@ -8,17 +8,11 @@
 #include <iostream>
 #include <iomanip>
 #include "Investments.h"
+#include "Input.h"
 using namespace std;
 
-// Structure that groups the Input-related variables together in order to pass through the inputScreen function.
-struct Input {
-	double deposit;
-	double monthly;
-	double rate;
-	int years;
-};
-
-// Outputs the blank display screen.
+/** Outputs the default display screen.
+*/
 void displayScreen() {
 	cout << setfill('*') << setw(38) << "" << endl;
 	cout << "* * * * * * * DATA INPUT * * * * * * *" << endl;
@@ -30,81 +24,8 @@ void displayScreen() {
 	cout << endl;
 }
 
-/**
- * Asks user to enter either an integer or a double with a prompt that is passed through the function.
- * Verifies that the user input is valid.
- *
- * @param x, prompt
- */
-void inputDouble(double& x, string prompt) {
-	while (true) {
-		cout << prompt;
-		cin >> x;
-
-		if (!cin.fail()) {
-			break;
-		}
-		else {
-			cout << "(Invalid input. Please enter an integer or a double.)" << endl;
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		}
-	}
-}
-
-/**
- * Asks user to enter an integer with a prompt that is passed through the function.
- * Verifies that the user input is valid.
- *
- * @param x, prompt
- */
-void inputInt(int& x, string prompt) {
-	while (true) {
-		cout << prompt;
-		cin >> x;
-
-		if (!cin.fail()) {
-			break;
-		}
-		else {
-			cout << "(Invalid input. Please enter an integer.)" << endl;
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		}
-	}
-}
-
-
-/**
- * Gets user-input variables to be used for calculations.
- *
- * @return structure of deposit, monthly, rate, years
- */
-Input inputScreen() {
-	double deposit;
-	double monthly;
-	double rate;
-	int years;
-	Input i;
-
-	cout << setfill('*') << setw(38) << "" << endl;
-	cout << "* * * * * * * DATA INPUT * * * * * * *" << endl;
-	cout << setfill('*') << setw(38) << "" << endl;
-
-	inputDouble(deposit, "Initial Investment Amount: $");
-	inputDouble(monthly, "Monthly Deposit: $");
-	inputDouble(rate, "Annual Interest: %");
-	inputInt(years, "Number of years: ");
-
-	i.deposit = deposit;
-	i.monthly = monthly;
-	i.rate = rate;
-	i.years = years;
-
-	return i;
-}
-
 int main() {
+	Input i;
 	char loop = 'y';
 
 	displayScreen();
@@ -114,11 +35,15 @@ int main() {
 		system("pause");
 
 		system("cls");
-		Input i = inputScreen();
+		i.inputScreen();
+		double deposit = i.getDeposit();
+		double monthly = i.getMonthly();
+		double rate = i.getRate();
+		int years = i.getYears();
 		system("pause");
 
 		// Allows user to input initial amounts and get a print out of all calculations with those variables.
-		auto account = Investments(i.deposit, i.monthly, i.rate, i.years);
+		auto account = Investments(deposit, monthly, rate, years);
 		account.noMonthlyDeposit();
 		account.yesMonthlyDeposit();
 
