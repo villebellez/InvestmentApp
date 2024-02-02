@@ -3,23 +3,25 @@
 #include "Investments.h"
 using namespace std;
 
-// Default constructor to create objects
+/** Constructor
+*/
 Investments::Investments(double deposit, double monthly, double rate, int years):
 	initialDeposit(deposit), monthlyDeposit(monthly), compoundInterest(rate), numYears(years) {
 }
 
-// Destructor to destroy objects
+/** Destructor
+*/
 Investments::~Investments() = default;
 
 /**
  * Calculates interest earned during the specified time period, ignoring user-entered monthly deposit.
  * Prints report.
- *
  */
 void Investments::noMonthlyDeposit() const {
 	int year = 1;
 	double yearEnd = initialDeposit;
 
+	// Header output.
 	cout << endl;
 	cout << "BALANCE AND INTEREST WITHOUT ADDITIONAL MONTHLY DEPOSITS" << endl;
 	cout << setfill('=') << setw(74) << "" << endl;
@@ -31,6 +33,7 @@ void Investments::noMonthlyDeposit() const {
 		double interestEarned = yearEnd * compoundInterest / 100;
 		yearEnd += interestEarned;
 
+		// Balance output.
 		cout << right << setfill(' ') << setw(2) << year << fixed << setprecision(2) << setw(21) << "$" << yearEnd << setw(32) << "$" << interestEarned << endl;
 
 		year++;
@@ -41,12 +44,12 @@ void Investments::noMonthlyDeposit() const {
 /**
  * Calculates interest earned during the specified time period, including user-entered monthly deposit.
  * Prints report.
- *
  */
 void Investments::yesMonthlyDeposit() const {
 	int year = 1;
 	double yearEnd = initialDeposit;
 
+	// Header output.
 	cout << endl;
 	cout << "BALANCE AND INTEREST WITH ADDITIONAL MONTHLY DEPOSITS" << endl;
 	cout << setfill('=') << setw(74) << "" << endl;
@@ -70,6 +73,7 @@ void Investments::yesMonthlyDeposit() const {
 		}
 		yearEnd = monthEnd;
 
+		// Balance output.
 		cout << right << setfill(' ') << setw(2) << year << fixed << setprecision(2) << setw(21) << "$" << yearEnd << setw(32) << "$" << interestEarned << endl;
 
 		year++;
